@@ -115,17 +115,106 @@ int main() {
 }
 
 
-            case 4:
-            printf("Chức năng số 4: Tính tiền điện\n");
-            break;
+            case 4: {
+    printf("\nChức năng số 4: Tính tiền điện\n");
 
-            case 5:
-            printf("Chức năng số 5: Chức năng đổi tiền\n");
-            break;
+    int kwh;
+    printf("Nhập số điện tiêu thụ (kWh): ");
+    scanf("%d", &kwh);
 
-            case 6:
-            printf("Chức năng số 6: Tính lãi suất vay ngân hàng vay trả góp\n");
-            break;
+    if (kwh < 0) {
+        printf("Số điện không hợp lệ!\n");
+        break;
+    }
+
+    long tien = 0;
+
+    if (kwh <= 50)
+        tien = kwh * 1678;
+    else if (kwh <= 100)
+        tien = 50 * 1678 + (kwh - 50) * 1734;
+    else if (kwh <= 200)
+        tien = 50 * 1678 + 50 * 1734 + (kwh - 100) * 2014;
+    else if (kwh <= 300)
+        tien = 50 * 1678 + 50 * 1734 + 100 * 2014 + (kwh - 200) * 2536;
+    else if (kwh <= 400)
+        tien = 50 * 1678 + 50 * 1734 + 100 * 2014 + 100 * 2536 + (kwh - 300) * 2834;
+    else
+        tien = 50 * 1678 + 50 * 1734 + 100 * 2014 + 100 * 2536 + 100 * 2834 + (kwh - 400) * 2927;
+
+    printf("Tiền điện phải trả: %ld VND\n", tien);
+    break;
+}
+
+
+            case 5: {
+    printf("\nChức năng số 5: Đổi tiền\n");
+    long money;
+    printf("Nhập số tiền cần đổi (VND): ");
+    scanf("%ld", &money);
+
+    if (money <= 0) {
+        printf("Số tiền không hợp lệ!\n");
+        break;
+    }
+
+    int menhgia[] = {500000, 200000, 100000, 50000, 20000, 10000, 5000, 2000, 1000};
+    int count[9] = {0};
+
+    long temp = money;
+
+    for (int i = 0; i < 9; i++) {
+        count[i] = temp / menhgia[i];
+        temp %= menhgia[i];
+    }
+
+    printf("Kết quả đổi tiền:\n");
+    for (int i = 0; i < 9; i++) {
+        if (count[i] > 0)
+            printf("%d tờ %d VND\n", count[i], menhgia[i]);
+    }
+
+    printf("Số tiền còn lại không đổi được: %ld VND\n", temp);
+
+    break;
+}
+
+
+           case 6: {
+    printf("\nChức năng số 6: Tính lãi suất vay trả góp\n");
+
+    double tienVay, laiSuat;
+    int soThang;
+
+    printf("Nhập số tiền vay (VND): ");
+    scanf("%lf", &tienVay);
+
+    printf("Nhập số tháng vay: ");
+    scanf("%d", &soThang);
+
+    printf("Nhập lãi suất hàng tháng (%%): ");
+    scanf("%lf", &laiSuat);
+
+    laiSuat /= 100.0;
+
+    double gocHangThang = tienVay / soThang;
+
+    printf("\n===== BẢNG THANH TOÁN =====\n");
+
+    double tienConLai = tienVay;
+
+    for (int i = 1; i <= soThang; i++) {
+        double tienLai = tienConLai * laiSuat;
+        double tienTra = gocHangThang + tienLai;
+
+        printf("Tháng %2d: Gốc: %.0lf  | Lãi: %.0lf  | Tổng trả: %.0lf\n",
+               i, gocHangThang, tienLai, tienTra);
+
+        tienConLai -= gocHangThang;
+    }
+
+    break;
+}
 
             case 7:
             printf("Chức năng số 7: Xây dựng chương trình vay tiền mua xe\n");
