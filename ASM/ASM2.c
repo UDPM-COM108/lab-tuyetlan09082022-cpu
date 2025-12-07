@@ -49,13 +49,71 @@ int main() {
 
             
             
-            case 2:
-            printf("Chức năng số 2:Tìm Ước số chung và bội số chung của 2 số\n");
-            break;
+            
+            case 2: {
+    printf("\nChức năng số 2: Tìm Ước số chung và Bội số chung của 2 số\n");
 
-            case 3:
-            printf("Chức năng số 3: Tính tiền cho quán Karaoke\n");
-            break;
+    int a, b;
+    printf("Nhập số thứ nhất: ");
+    scanf("%d", &a);
+    printf("Nhập số thứ hai: ");
+    scanf("%d", &b);
+
+    // Tính UCLN theo Euclid
+    int x = a, y = b;
+    while (y != 0) {
+        int temp = y;
+        y = x % y;
+        x = temp;
+    }
+    int ucln = x;
+
+    // BCNN
+    int bcnn = (a * b) / ucln;
+
+    printf("UCLN của %d và %d là: %d\n", a, b, ucln);
+    printf("BCNN của %d và %d là: %d\n", a, b, bcnn);
+
+    break;
+}
+
+
+           case 3: {
+    printf("\nChức năng số 3: Tính tiền Karaoke\n");
+
+    int batdau, ketthuc;
+    float giagoc = 30000;
+    float tongtien = 0;
+
+    printf("Nhập giờ bắt đầu (0-23): ");
+    scanf("%d", &batdau);
+    printf("Nhập giờ kết thúc (0-23): ");
+    scanf("%d", &ketthuc);
+
+    if (batdau < 0 || ketthuc > 23 || batdau >= ketthuc) {
+        printf("Thời gian không hợp lệ!\n");
+        break;
+    }
+
+    int sogio = ketthuc - batdau;
+
+    if (sogio == 1) {
+        tongtien = giagoc;
+    } else {
+        tongtien = giagoc + (sogio - 1) * (giagoc * 0.7);  // giờ thứ 2 trở đi giảm 30%
+    }
+
+    // Giảm thêm 10% nếu nằm trong khoảng 14h-17h
+    if (batdau >= 14 && ketthuc <= 17) {
+        tongtien *= 0.9;
+    }
+
+    printf("Tổng số giờ: %d\n", sogio);
+    printf("Tiền karaoke phải trả: %.0f VND\n", tongtien);
+
+    break;
+}
+
 
             case 4:
             printf("Chức năng số 4: Tính tiền điện\n");
