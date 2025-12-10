@@ -1,5 +1,38 @@
 #include <stdio.h>
-#include <stdlib.h>// exit
+#include <stdlib.h>
+#include <math.h>
+#include <string.h>
+
+struct SINHVIEN{
+    char HOTEN[50];
+    float diem;
+    char HOCLUC[20];
+};
+
+typedef struct SINHVIEN SV;
+//ham xep loai hoc luc
+void xepLoai(SV *sv) {
+    if (sv->diem >= 9.0) strcpy(sv->HOCLUC, "Xuat sac");
+    else if (sv->diem >= 8.0 && sv->diem <9.0) strcpy(sv->HOCLUC, "Gioi");
+    else if (sv->diem >= 7.0 && sv->diem <8.0) strcpy(sv->HOCLUC, "Kha");
+    else if (sv->diem >= 5.0 && sv->diem <7.0) strcpy(sv->HOCLUC, "Trung binh");
+    else strcpy(sv->HOCLUC, "Yeu");
+}
+//ham sap xep theo thu tu giam dan
+void sapxep(SV a[], int n){
+    for (int i = 0; i < n - 1; i++){
+        for (int j = i + 1; j < n; j++){
+            if (a[i].diem < a[j].diem) {
+                SV temp = a[i];
+                a[i] = a[j];
+                a[j] = temp;
+            }
+        }
+    }
+}
+
+ 
+
 
 
 int main() {
@@ -44,11 +77,8 @@ int main() {
 
     break;
 }
-
-       
-
-            
-            
+  
+                     
             
             case 2: {
     printf("\nChức năng số 2: Tìm Ước số chung và Bội số chung của 2 số\n");
@@ -218,11 +248,85 @@ int main() {
 
             case 7:
             printf("Chức năng số 7: Xây dựng chương trình vay tiền mua xe\n");
+            {
+                double phanTramVay, tienXe = 500000000;
+                double traTruoc, soTienVay, laiThang = 0.0125;
+                int soThang = 24 * 12;
+
+                printf("Nhap so %% vay toi da: ");
+                scanf("%lf", &phanTramVay);
+
+                if (phanTramVay <= 0 || phanTramVay > 100) {
+                    printf("Phan tram vay khong hop le!\n");
+                break;
+                }
+
+                soTienVay = tienXe * (phanTramVay / 100);
+                traTruoc = tienXe - soTienVay;
+
+                double tienGocThang = soTienVay / soThang;
+                double laiThangPhaiTra = soTienVay * laiThang;
+                double tienHangThang = tienGocThang + laiThangPhaiTra;
+
+                printf("\n===== KET QUA VAY MUA XE =====\n");
+                printf("Gia tri xe: %.0f VND\n", tienXe);
+                printf("Phan tram vay: %.0f %%\n", phanTramVay);
+                printf("So tien tra truoc: %.0f VND\n", traTruoc);
+                printf("So tien vay: %.0f VND\n", soTienVay);
+                printf("Tien goc phai tra moi thang: %.0f VND\n", tienGocThang);
+                printf("Tien lai moi thang: %.0f VND\n", laiThangPhaiTra);
+                printf("Tong tien phai tra moi thang: %.0f VND\n", tienHangThang);
+                printf("Tong thoi gian vay: %d thang\n", soThang);
+
+            }
             break;
 
-            case 8:
-            printf("Chức năng số 8: Sắp xếp thông tin sinh viên\n");
-            break;
+           case 8:
+    printf("\n===== CHỨC NĂNG 8: SẮP XẾP THÔNG TIN SINH VIÊN =====\n");
+{
+    int n;
+    printf("Nhập số lượng sinh viên: ");
+    scanf("%d", &n);
+    getchar();
+
+    if (n <= 0) {
+        printf("Số lượng không hợp lệ!\n");
+        break;
+    }
+
+    SV sv[n];
+
+    for (int i = 0; i < n; i++) {
+        printf("\n--- Nhập thông tin sinh viên %d ---\n", i + 1);
+
+        printf("Nhập họ và tên: ");
+        fgets(sv[i].HOTEN, sizeof(sv[i].HOTEN), stdin);
+        sv[i].HOTEN[strcspn(sv[i].HOTEN, "\n")] = 0;
+
+        printf("Nhập điểm: ");
+        scanf("%f", &sv[i].diem);
+        getchar();
+
+        xepLoai(&sv[i]);   // ✔ sửa đúng tên hàm
+    }
+
+    // sắp xếp giảm dần
+    sapxep(sv, n);
+
+    // tiêu đề bảng
+    printf("\n--- DANH SÁCH SAU KHI SẮP XẾP ---\n");
+    printf("%-25s %-10s %-15s\n", "HO TEN", "DIEM", "HOC LUC");
+
+    // in danh sách
+    for (int i = 0; i < n; i++) {
+        printf("%-25s %-10.2f %-15s\n", sv[i].HOTEN, sv[i].diem, sv[i].HOCLUC);
+    }
+}
+break;
+
+
+            
+            
 
             case 9:
             printf("Chức năng số 9: Xây dựng game FPOLY-LOTT (2/15)\n");
