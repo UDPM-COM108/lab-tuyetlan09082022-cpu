@@ -1,0 +1,73 @@
+#include<stdio.h>
+#include<string.h>
+
+struct Sinhvien {
+    int MSSV;
+    char Hoten[50];
+    float Diem;
+    char Hocluc[50];
+};
+void inputstructsinhsien (struct Sinhvien x[], int n ){
+    int i;
+    for(i = 0; i< n; i++){
+            printf("nhap MSSV[%d]: ",i);
+            scanf("%d", &x[i].MSSV);
+            getchar();//???
+            printf("nhap hoten[%d]: ", i);
+            gets(x[i].Hoten);
+            printf("nhap diem[%d]: ",i);
+            scanf("%f",&x[i].Diem);
+    }
+};
+void printstructsinhvien  (struct Sinhvien x[], int n ){
+     int i;
+    for(i = 0; i< n; i++){
+            printf("MASV: %d ", x[i].MSSV);
+            printf("Ho ten: %s ", x[i].Hoten);
+            printf("Diem: %f ", x[i].Diem);
+            printf("Hoc Luc: %s", x[i].Hocluc);
+    }
+};
+void xeploaistructsinhvien ( struct Sinhvien x[], int n ){
+    int i;
+for (i=0; i<n; i++){
+    if(x[i].Diem<5)
+        strcpy (x[i].Hocluc, "Yeu");
+    else if(x[i].Diem<6.5)
+        strcpy (x[i].Hocluc, "TB");
+    else if(x[i].Diem<8)
+        strcpy (x[i].Hocluc, "Kha") ; 
+    else if(x[i].Diem<9)
+        strcpy (x[i].Hocluc, "Gioi");
+    else 
+        strcpy(x[i].Hocluc, "Xuat sad");
+    }
+};
+// void swapstructsinhvien (struct Sinhvien *x, struct Sinhvien *j, int temp){
+//     struct SinhVien temp;
+//     temp = *x;
+//     *x = *y ;
+//     *y = temp; 
+// };
+int main(){
+    int i , j, slsv;
+    //struct SinhVien sv1,sv2;
+    struct Sinhvien SA2130x[39];
+    printf("Nhap so luong SV:");
+    scanf("%d", &slsv);
+    inputstructsinhsien(SA2130x , slsv);
+    printstructsinhvien(SA2130x , slsv);
+    xeploaistructsinhvien(SA2130x , slsv);
+    // for( i = 0; i < slsv ; i++){    
+    //     for(j=i+1; j < slsv; j++){
+    //         if(SA2130x[i].Diem < SA2130x[j].Diem){
+    //                 swapstructsinhvien(&SA2130x[i], &SA2130x[j]);
+    //             }
+
+    //         }
+
+    //     }
+    printf("danh sach Sv sau khi sort: \n");
+    printstructsinhvien(SA2130x, slsv);
+    return 0;
+}
